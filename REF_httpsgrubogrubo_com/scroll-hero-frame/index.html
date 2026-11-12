@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Scroll Hero Frame — Demo</title>
+  <link rel="stylesheet" href="scroll-hero.css">
+  <style>
+    /* ---------- Demo page only (not part of the frame) ---------- */
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { margin: 0; background: #0a090e; color: #f5f3f6; font-family: Arial, Helvetica, sans-serif; }
+
+    .demo-header {
+      position: fixed; inset: 0 0 auto 0; z-index: 50;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 108px; padding: 0 62px 0 50px; pointer-events: none;
+    }
+    .demo-header a, .demo-header button { pointer-events: auto; }
+    .demo-brand { display: flex; align-items: center; gap: 34px; color: #fff; text-decoration: none; }
+    .demo-logo {
+      font-family: "Arial Narrow", Arial, sans-serif; font-weight: 700; font-size: 34px; letter-spacing: -.02em;
+      line-height: 1; transform: scaleY(1.55); transform-origin: center; display: inline-block;
+    }
+    .demo-tagline { font-size: 10.5px; line-height: 1.42; letter-spacing: .06em; color: #e9e6ec; }
+    .demo-nav { display: flex; align-items: center; gap: 30px; }
+    .demo-nav a { color: #fff; text-decoration: none; font-size: 11px; letter-spacing: .14em; }
+    .demo-pill {
+      display: inline-flex; align-items: center; gap: 8px; height: 46px; padding: 0 22px;
+      border: 1px solid rgba(255,255,255,.75); border-radius: 999px; background: transparent;
+      color: #fff; font: 11px/1 Arial, sans-serif; letter-spacing: .14em; text-decoration: none; cursor: pointer;
+    }
+    .demo-pill + .demo-pill { margin-left: -16px; padding: 0 18px; }
+    .demo-pill:hover { background: #4C0AAF; border-color: #4C0AAF; }
+
+    .demo-intro {
+      min-height: 100vh; display: grid; place-items: center; text-align: center; padding: 140px 7vw 80px;
+      background: #0d0c10; border-bottom: 1px solid #2d2932;
+    }
+    .demo-intro p { color: #9d989e; font-size: 11px; letter-spacing: .18em; margin: 0; }
+    .demo-intro strong { display: block; font: 900 clamp(40px, 6vw, 90px)/.95 "Arial Black", Arial, sans-serif; letter-spacing: -.06em; margin: 18px 0; color: #fff; }
+    .demo-end { min-height: 100vh; display: grid; place-items: center; background: #0a090e; color: #6f6a73; font-size: 11px; letter-spacing: .18em; border-top: 1px solid #2d2932; }
+
+    .demo-cookie {
+      position: fixed; left: 16px; bottom: 12px; z-index: 50; padding: 7px 14px; border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.18); background: rgba(10,9,14,.8); color: #cfcbd3; font: 11px Arial, sans-serif;
+    }
+
+    @media (max-width: 1100px) { .demo-nav a { display: none; } .demo-tagline { display: none; } }
+    @media (max-width: 820px)  { .demo-header { height: 76px; padding: 0 5vw; } .demo-pill { height: 38px; padding: 0 14px; } }
+  </style>
+</head>
+<body>
+
+  <!-- Demo header (stands in for your site's own fixed navigation) -->
+  <header class="demo-header">
+    <a class="demo-brand" href="#" aria-label="Home">
+      <span class="demo-logo">BRAND</span>
+      <span class="demo-tagline">WE TURN<br>COMPLEX THINGS<br>INTO COMPELLING EXPERIENCES.</span>
+    </a>
+    <nav class="demo-nav" aria-label="Main">
+      <a href="#">WORK</a><a href="#">STUDIO</a><a href="#">INSIGHTS</a><a href="#">ABOUT US</a>
+      <a class="demo-pill" href="#">CONTACT ↗</a>
+      <button class="demo-pill" type="button">EN&nbsp;⌄</button>
+    </nav>
+  </header>
+
+  <!-- Spacer before the frame so scrubbing can be tested from the start -->
+  <section class="demo-intro">
+    <div>
+      <p>SCROLL HERO FRAME / DEMO</p>
+      <strong>Scroll down.</strong>
+      <p>THE VIDEO BELOW FOLLOWS YOUR SCROLL — FORWARDS AND BACKWARDS.</p>
+    </div>
+  </section>
+
+  <!-- ============================ THE FRAME ============================ -->
+  <section class="shf" data-scroll-hero aria-labelledby="shf-title-1">
+    <div class="shf-backdrop" aria-hidden="true">
+      <!-- Glass scene: green textured backdrop, cut-out portrait with 2.5D depth,
+           glass shards drifting sideways. Every <img> inside .shf-scene is placed
+           inside a near shard (optional; delete them for plain glass). -->
+      <div class="shf-scene"
+           data-portrait="assets/subject/portrait.png"
+           data-depth-map="assets/subject/portrait-depth.png"
+           data-background="assets/bg/green-leather.jpg"
+           data-shards="assets/glass/shards.glb"
+           data-frost="assets/glass/frost.jpg"
+           data-frost-normal="assets/glass/frost-normal.png"
+           data-front="6" data-back="5" data-subject-x="0.36">
+        <img src="assets/cards/rupee-01.jpg" alt="">
+        <img src="assets/cards/rupee-04.jpg" alt="">
+        <img src="assets/cards/rupee-08.jpg" alt="">
+      </div>
+      <!-- Shown only if WebGL2 is unavailable -->
+      <img class="shf-portrait-fallback" src="assets/subject/portrait.png" alt="">
+      <div class="shf-shade"></div>
+      <div class="shf-progress"><span></span></div>
+    </div>
+
+    <div class="shf-content">
+      <div class="shf-heading">
+        <h2 id="shf-title-1">IDEAS ARE<br><em>HUMAN.</em></h2>
+        <p class="shf-lead">Creative experience across brands, products, films and technology — connected by the belief that every great execution begins with an idea.</p>
+      </div>
+
+      <div class="shf-grid">
+        <div class="shf-card">
+          <div class="shf-kicker">FOUNDER / CREATIVE DIRECTOR</div>
+          <h3>Your<br>Name<span class="shf-dot">.</span></h3>
+          <div class="shf-counter"><strong>20<span>+</span></strong><span>YEARS OF CREATIVE EXPERIENCE</span></div>
+          <p class="shf-bio">For over two decades, your name has connected creative thinking with art direction, design, storytelling, 3D and new technologies — working across industries and formats.</p>
+          <p class="shf-bio shf-bio-2">Your studio builds on that perspective: start with a sharp idea, then choose whatever medium will bring it to life.</p>
+          <div class="shf-awards">
+            <div class="shf-awards-label">SELECTED RECOGNITION</div>
+            <div class="shf-award"><span>01</span><p>Award or publication — Top 200 listing, 2019–2020</p></div>
+            <div class="shf-award"><span>02</span><p>Industry awards — Grand Prix, campaign name</p></div>
+            <div class="shf-award"><span>03</span><p>Awards jury — member, 2024–2025</p></div>
+            <p class="shf-note">Selected credits and awards reflect a professional career, including agency collaborations.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="shf-signature"><span>YOUR NAME / BRAND</span>
+        <div class="shf-social" aria-label="Social profiles">
+          <a class="shf-social-icon" href="#" aria-label="LinkedIn" title="LinkedIn">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8.5V20M5 4v.1M10 20v-11.5h4v1.7c.9-1.4 2.3-2.1 4-1.9 3 0 4 1.9 4 5V20h-4v-6.2c0-1.5-.4-2.4-1.7-2.4-1.4 0-2.3 1-2.3 2.5V20z"/></svg>
+          </a>
+          <a class="shf-social-icon is-filled" href="#" aria-label="Facebook" title="Facebook">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 20v-7h2.4l.4-3H15V8.3c0-.9.3-1.3 1.4-1.3H18V4.2a23 23 0 0 0-2.3-.2C12.9 4 11 5.6 11 8.6V10H9v3h2v7z"/></svg>
+          </a>
+          <a class="shf-social-icon is-filled" href="#" aria-label="Behance" title="Behance">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><text x="2.2" y="16.6" font-family="Arial, sans-serif" font-weight="700" font-size="11.5">Bē</text></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- ========================== END OF FRAME ========================== -->
+
+  <section class="demo-end"><span>NEXT SECTION</span></section>
+  <div class="demo-cookie">Cookie settings</div>
+
+  <script src="scroll-hero.js" defer></script>
+  <script src="scroll-hero-glass.js" defer></script>
+</body>
+</html>
