@@ -1,0 +1,33 @@
+# Publishes the Scroll Hero Frame demo to GitHub Pages on every push to main.
+# Only the scroll-hero-frame folder is served, so the site lives at
+# https://dev-2141.github.io/scroll-hero-frame/
+name: Publish site
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: REF_httpsgrubogrubo_com/scroll-hero-frame
+      - id: deployment
+        uses: actions/deploy-pages@v4
